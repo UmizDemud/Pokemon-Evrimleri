@@ -1,0 +1,42 @@
+﻿@model Pokemon_Evrimpleri.Models.PokemonModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.name</h1>
+
+<div>
+    <hr />
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 300px">
+        <dl style="justify-self: flex-start" class="row">
+            <dt class = "col-sm-2">
+                İsim
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.name)
+            </dd>
+            <dt style="display: flex; align-items: center" class = "col-sm-2">
+                Tip
+            </dt>
+            <dd style="display: flex; align-items: center" class="col-sm-10">
+                @for (int i = 0; i < Model.types.Length; i++)
+                {
+                    <object
+                        style="border-radius: 9px@(i != 0 ? "; margin-left: 7px" : "")"
+                        width="30px"
+                        height="30px"
+                        type="image/svg+xml"
+                        data="~/assets/@(Model.types[i]).svg"> </object>
+                }
+            </dd>
+        </dl>
+        <div style="text-align: center">
+            <img width="60" height="60" src="@Model.imageUrl" alt="@Model.name" />
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

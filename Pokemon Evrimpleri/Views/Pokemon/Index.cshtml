@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Pokemon_Evrimpleri.Models.PokemonModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="display: flex; justify-content: space-between">
+    <h1>Liste</h1>
+    <div>
+        <a
+            class="input-svg-nocntrl"
+            id="backward"
+            asp-controller="Pokemon"
+            asp-area=""
+            asp-action="list"
+            asp-route-id="@(ViewBag.id - 1)"
+        >
+            <img width="46" src="~/assets/arrow-left.svg" alt="previous page" />
+        </a>
+        <a
+            class="input-svg-nocntrl"
+            id="forward"
+            asp-controller="Pokemon"
+            asp-area=""
+            asp-action="list"
+            asp-route-id="@(ViewBag.id + 1)"
+        >
+            <img width="46" src="~/assets/arrow-right.svg" alt="next page" />
+        </a>
+        <script>
+            var id = @ViewBag.id;
+            var backward = document.getElementById("backward");
+            var forward = document.getElementById("forward");
+            backward.addEventListener("click", (e) => {
+                if (id == 0) {
+                    e.preventDefault();
+                }
+            })
+            forward.addEventListener("click", (e) => {
+                // Honestly, noone knows how many pokemons there are..
+            })
+        </script>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                İsim
+            </th>
+            <th>
+                Seçenekler
+            </th>
+            <th style="text-align: center">
+                Görsel
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@for (int i = 0; i < Model.Count(); i++) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.ElementAt(i).name)
+            </td>
+            <td>
+                <a asp-controller="Pokemon" asp-area="" asp-action="Details" asp-route-id="@(i + 1)">Detay</a>
+            </td>
+            <td style="text-align: center">
+                <img width="200" height="200" src="@Model.ElementAt(i).imageUrl" alt="@Model.ElementAt(i).name" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
